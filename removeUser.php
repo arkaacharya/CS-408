@@ -58,7 +58,7 @@ else{
 		$flag = mysqli_fetch_row($data); //Extracting the next flag value
 	}
 	
-	$i = 1; //Used as a counter
+	/**$i = 1; //Used as a counter
 	//Constructing an sql query to get the username from the answers table
 	$sql = "SELECT username FROM useranswers";
 	$data1 = mysqli_query($conn, $sql); //Executing the sql query
@@ -89,7 +89,7 @@ else{
 			}
 		}
 		$result = mysqli_fetch_row($data1); //Extracting information from the executed query
-	}
+	}*/
 	
 	if(isset($_GET['redirect'])){
 

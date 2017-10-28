@@ -9,8 +9,6 @@
 		
 		$userName = $_POST['username']; //Getting the user's username
 		$passWord = $_POST['password']; //Getting the user's password
-		$randKey = $_POST['randKey']; //Getting the value of the entered key
-		$genKey = $_POST['genKey']; //Getting the value of the generated key
 	
 		$conn = new mysqli($servername, $username, $password, $dbname); //Establishing connection to the database
 		if($conn->error){ //Checking connection for errors
@@ -22,7 +20,7 @@
 		$data = mysqli_query($conn, $sql); //Executing the query
 
 		if($data == false){ //Checking if the query was executed
-			header("Location: errorLogin.php"); //Redirecting to the error page
+			header("Location: login.php"); //Redirecting to the error page
 			die; //Terminating this page
 		}
 		

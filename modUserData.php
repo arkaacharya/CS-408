@@ -111,7 +111,7 @@
 			}
 			
 			if(isset($_POST['userName']) && preg_replace('/\s+/', '', $_POST['userName']) != ""){
-				$newUserName = preg_replace('/\s+/', '', $_POST['userName']);
+				//$newUserName = preg_replace('/\s+/', '', $_POST['userName']);
 				$sql = "SELECT username FROM users WHERE username=\"".$newUserName."\"";
 				$data = mysqli_query($conn, $sql); //Executing the sql query
 				$result = mysqli_fetch_row($data);

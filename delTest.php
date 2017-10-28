@@ -22,70 +22,65 @@
 	}
 	
 	if($isLoggedIn && $acessor=='admin'){ //Checking the conditions to display the webpage
-		$testName = $_GET['testName']; //Getting the test name
 ?>
 	<html>
 	<head>
-	<!-- Name on tab of page -->
-	<title>Change Time Limit</title>
+	<title>Delete Test</title> <!-- Name on tab of page -->
 
 	</head>
 	<body>
 	<form
-	action = ""
+	action = "removeTest.php"
 	method = "post"
 	>
-	
 	<!-- Title of page -->
-	<font size="+2" face="arial"><center><header><h1>Change Time Limit</h1></header></center></font>
+	<font size="+2" face="arial"><center><header><h1>Delete Existing Test</h1></header></center></font>
 
 	<div id="insideBody">
 	
 	<table border = "0">
-	
-	<!-- Area for entering new time limit -->
-	<tr>
-		<td> <font size="+2" face="arial">Enter New Time Limit in Minutes:</font size="+2"> </td>
-		<td
-		align  = "center">
-			<input type = "number"
-			name = "timeLimit"
-			/></td>
-	</tr>
-	
-	<tr>
-	<td><font size="+2" face="arial" color="red"></br>Note: Please enter a value greater than 0.</font></td>
-	</tr>
+	<!-- Displaying all the test names in a group of radio buttons -->
+	<tr><td>
+		<font size="+2" face="arial">Select Test:</font size="+2"></td></tr>
+		<?php
+			//Constructing an sql query to get the name of the exam
+			$sql = "SELECT chapter FROM chapters";
+			$data1 = mysqli_query($conn, $sql); //Executing the sql query
+			$result1 = mysqli_fetch_row($data1); //Extracting information from the executed query
+			while($result1){ //Condition to loop as long as information is being received
+				$sql = "SELECT testName FROM ".$result1[0];
+				$data = mysqli_query($conn, $sql); //Executing the sql query
+				$result = mysqli_fetch_row($data); //Extracting information from the executed query
+				while($result){
+		?>
+	<tr><td>
+		<!-- Displaying the test name with a radio button -->
+		</br><input type = "radio" name = "testName" value = "<?php echo $result[0] ?>"/><font size="+2" face="arial"><?php echo $result[0] ?></font size="+2">
+	</td></tr>
 
-	<!-- Button used to turn in new time limit -->
+	<?php
+					$result = mysqli_fetch_row($data); //Extracting information from the executed query
+				}
+				$result1 = mysqli_fetch_row($data1); //Extracting information from the executed query
+			}
+	?>
+	
+	<!-- Button to submit the selected test -->
 	<tr>
 		<td
 		colspan = "2"
 		align  = "center">
 			<input type = "submit"
-			value = "Submit" /></td>
+			value = "Delete Test" /></td>
 	</tr>
 	</table>
 		<!-- Redirecting to the previous page -->
-		<font size="+2" face="arial"><a href="modOptTest.php?acessor=admin&testName=<?php echo $testName; ?>">Back</a></font size="+2">
+		<font size="+2" face="arial"><a href="adminPage.php?acessor=admin">Back</a></font>
 		</br></br>
 	<font size="+2" face="arial"><a href="adminPage.php?acessor=admin">Home</a></font size="+2">
 		</br></br>
 		<font size="+2" face="arial"><a href="logout.php?userName=admin">Logout</a></font>
 
-		<?php
-			if(isset($_POST['timeLimit'])){ //Checking if time limit has been entered
-				$timeLimit = preg_replace('/\s+/', '', $_POST['timeLimit']); //Getting the time limit entered
-				
-				//Constructing an sql query to update the new time limit in the database
-				$sql = "UPDATE form SET timeLimit=".$timeLimit." WHERE formNo = \"".$testName."\"";
-				$data = mysqli_query($conn, $sql); //Executing the query
-				
-				header("Location: adminPage.php?acessor=admin&testName=".$testName); //Redirecting to the next page
-				die; //Terminating this page
-			}
-		?>
-	</div>
 	</form>
 
 	</body>

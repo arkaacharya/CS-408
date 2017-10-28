@@ -8,7 +8,7 @@
 		$password = NULL; //Password used to connect to database
 		
 		$userName = $_POST['username']; //Getting the username
-		echo $userName = preg_replace('/\s+/', '', $_POST['username']);
+		//echo $userName = preg_replace('/\s+/', '', $_POST['username']);
 		
 		$passWord = $_POST['password']; //Getting the password
 		echo $passWord = preg_replace('/\s+/', '', $_POST['password']);

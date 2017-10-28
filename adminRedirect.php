@@ -45,7 +45,7 @@ else if($_POST['adminOpt'] == "reviewAns"){ //Checking the value of the choice m
 	die; //Terminating this page
 }
 else if($_POST['adminOpt'] == "reviewStats"){ //Checking the value of the choice made by the admin
-	header("Location: reviewTest.php?acessor=admin&redirect=reviewAns"); //Redirecting to the appropriate page
+	header("Location: reviewTest.php?acessor=admin"); //Redirecting to the appropriate page
 	die; //Terminating this page
 }
 else{

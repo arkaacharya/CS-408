@@ -185,7 +185,7 @@
 					}
 				}
 				
-				header("Location: modQues.php?acessor=admin&testName=".$testName); //Redirecting to the next page
+				header("Location: modOptTest.php?acessor=admin&testName=".$testName); //Redirecting to the next page
 				die; //Terminating this page
 			}
 		?>

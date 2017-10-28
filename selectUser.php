@@ -22,12 +22,12 @@
 	}
 	
 	if($isLoggedIn && $acessor=='admin'){ //Checking the conditions to display the webpage
-		$testName = $_GET['testName']; //Getting the test name
+		$redirect = $_GET['redirect'];
 ?>
 	<html>
 	<head>
 	<!-- Name on tab of page -->
-	<title>Change Time Limit</title>
+	<title>Select User</title>
 
 	</head>
 	<body>
@@ -35,53 +35,54 @@
 	action = ""
 	method = "post"
 	>
-	
+
 	<!-- Title of page -->
-	<font size="+2" face="arial"><center><header><h1>Change Time Limit</h1></header></center></font>
-
+	<font size="+2" face="arial"><center><header><h1>Select User</h1></header></center></font>
 	<div id="insideBody">
-	
+
 	<table border = "0">
-	
-	<!-- Area for entering new time limit -->
+
+	<!-- Displaying the usernames as a group of radio buttons -->
 	<tr>
-		<td> <font size="+2" face="arial">Enter New Time Limit in Minutes:</font size="+2"> </td>
-		<td
-		align  = "center">
-			<input type = "number"
-			name = "timeLimit"
-			/></td>
-	</tr>
-	
-	<tr>
-	<td><font size="+2" face="arial" color="red"></br>Note: Please enter a value greater than 0.</font></td>
+		<font size="+2" face="arial">Select Username:</font size="+2">
+			<?php
+				//Constructing an sql query to get the username
+				$sql = "SELECT username FROM users";
+				$data = mysqli_query($conn, $sql); //Executing the query
+				$result = mysqli_fetch_row($data); //Extracting the infromation
+				while($result){ //Condition to loop as long as information is being received
+					if(($resultComp[0] == $result[1]) && ($result[0] != 'admin')){ //Checking if the username is a match and that it is not the admin
+						
+				?>
+			<!-- Displaying the username -->
+			</br><input type = "radio" name = "username" value = "<?php echo $result[0]?>"/><font size="+2" face="arial"><?php echo $result[0]?></font size="+2">
+			<?php
+					}
+					$result = mysqli_fetch_row($data); //Extracting information from the executed query
+				}
+			?>
 	</tr>
 
-	<!-- Button used to turn in new time limit -->
+	<!-- Button used to submit the selected username -->
 	<tr>
 		<td
 		colspan = "2"
 		align  = "center">
 			<input type = "submit"
-			value = "Submit" /></td>
+			value = "Select User" /></td>
 	</tr>
 	</table>
 		<!-- Redirecting to the previous page -->
-		<font size="+2" face="arial"><a href="modOptTest.php?acessor=admin&testName=<?php echo $testName; ?>">Back</a></font size="+2">
+		<font size="+2" face="arial"><a href="adminPage.php?acessor=admin">Back</a></font size="+2">
 		</br></br>
 	<font size="+2" face="arial"><a href="adminPage.php?acessor=admin">Home</a></font size="+2">
 		</br></br>
 		<font size="+2" face="arial"><a href="logout.php?userName=admin">Logout</a></font>
 
 		<?php
-			if(isset($_POST['timeLimit'])){ //Checking if time limit has been entered
-				$timeLimit = preg_replace('/\s+/', '', $_POST['timeLimit']); //Getting the time limit entered
-				
-				//Constructing an sql query to update the new time limit in the database
-				$sql = "UPDATE form SET timeLimit=".$timeLimit." WHERE formNo = \"".$testName."\"";
-				$data = mysqli_query($conn, $sql); //Executing the query
-				
-				header("Location: adminPage.php?acessor=admin&testName=".$testName); //Redirecting to the next page
+			if(isset($_POST['username'])){ //Checking if a username has been selected
+				$userName = $_POST['username']; //Getting the value of the selected username
+				header("Location: selectTest.php?acessor=admin&userName=".$userName."&redirect=".$redirect); //Redirecting to the next page
 				die; //Terminating this page
 			}
 		?>

@@ -22,12 +22,10 @@
 	}
 	
 	if($isLoggedIn && $acessor=='admin'){ //Checking the conditions to display the webpage
-		$testName = $_GET['testName']; //Getting the test name
 ?>
 	<html>
 	<head>
-	<!-- Name on tab of page -->
-	<title>Change Time Limit</title>
+	<title>Select Chapter</title> <!-- Name on the tab of the webpage -->
 
 	</head>
 	<body>
@@ -36,52 +34,52 @@
 	method = "post"
 	>
 	
-	<!-- Title of page -->
-	<font size="+2" face="arial"><center><header><h1>Change Time Limit</h1></header></center></font>
+	<!-- Title of the webpage -->
+	<font size="+2" face="arial"><center><header><h1>Select Chapter to be Changed</h1></header></center></font>
 
 	<div id="insideBody">
 	
 	<table border = "0">
-	
-	<!-- Area for entering new time limit -->
+
+	<!-- Displaying the names of the chapters as radio buttons -->
 	<tr>
-		<td> <font size="+2" face="arial">Enter New Time Limit in Minutes:</font size="+2"> </td>
-		<td
-		align  = "center">
-			<input type = "number"
-			name = "timeLimit"
-			/></td>
-	</tr>
-	
-	<tr>
-	<td><font size="+2" face="arial" color="red"></br>Note: Please enter a value greater than 0.</font></td>
+		<font size="+2" face="arial">Select Chapter:</font>
+		<?php
+			$sql = "SELECT chapter FROM chapters"; //Constructing the sql query to get the name of a chapter
+			$data = mysqli_query($conn, $sql); //Executing the sql query
+			$result = mysqli_fetch_row($data); //Extracting information fro mthe executed query
+			
+			while(isset($result[0])){ //Condition for looping as long as there is information passed in the query
+			?>
+			<!-- Displaying the name of the chapter -->
+			<font size="+2" face="arial"></br><input type = "radio" name = "chapter" value = "<?php echo $result[0]?>"/><?php echo $result[0]?></font>
+		<?php
+				$result = mysqli_fetch_row($data); //Extracting information from the executed query
+			}
+		?>
 	</tr>
 
-	<!-- Button used to turn in new time limit -->
+	<!-- Button for submitting the selected chapter -->
 	<tr>
 		<td
 		colspan = "2"
 		align  = "center">
 			<input type = "submit"
-			value = "Submit" /></td>
+			value = "Select Chapter" /></td>
 	</tr>
 	</table>
 		<!-- Redirecting to the previous page -->
-		<font size="+2" face="arial"><a href="modOptTest.php?acessor=admin&testName=<?php echo $testName; ?>">Back</a></font size="+2">
+		<font size="+2" face="arial"><a href="adminPage.php?acessor=admin">Back</a></font>
 		</br></br>
 	<font size="+2" face="arial"><a href="adminPage.php?acessor=admin">Home</a></font size="+2">
 		</br></br>
 		<font size="+2" face="arial"><a href="logout.php?userName=admin">Logout</a></font>
 
 		<?php
-			if(isset($_POST['timeLimit'])){ //Checking if time limit has been entered
-				$timeLimit = preg_replace('/\s+/', '', $_POST['timeLimit']); //Getting the time limit entered
+			if(isset($_POST['chapter'])){ //Checking if the chapter has been set
+				$chapter = $_POST['chapter']; //Getting the name of the selected chapter
 				
-				//Constructing an sql query to update the new time limit in the database
-				$sql = "UPDATE form SET timeLimit=".$timeLimit." WHERE formNo = \"".$testName."\"";
-				$data = mysqli_query($conn, $sql); //Executing the query
-				
-				header("Location: adminPage.php?acessor=admin&testName=".$testName); //Redirecting to the next page
+				header("Location: newChapName.php?acessor=admin&chapter=".$_POST['chapter']); //Redirecting to the admin page
 				die; //Terminating this page
 			}
 		?>

@@ -120,11 +120,11 @@
 			//Checking if everything has been set
 			if(isset($_POST['testName']) && isset($_POST['chapterName']) && isset($_POST['numMCQ']) && isset($_POST['numEssay']) && isset($_POST['timeLimit'])){
 
-				$testName = preg_replace('/\s+/', '', $_POST['testName']); //Getting the entered testname
-				$chapterName = preg_replace('/\s+/', '', $_POST['chapterName']); //Getting the entered chaptername
-				$numMCQ = preg_replace('/\s+/', '', $_POST['numMCQ']); //Getting the entered number of MCQ
-				$numEssay = preg_replace('/\s+/', '', $_POST['numEssay']); //Getting the entered essay questions
-				$timeLimit = preg_replace('/\s+/', '', $_POST['timeLimit']); //Getting the entered time limit
+				$testName = $_POST['testName']; //Getting the entered testname
+				$chapterName = $_POST['chapterName']; //Getting the entered chaptername
+				$numMCQ = $_POST['numMCQ']; //Getting the entered number of MCQ
+				$numEssay = $_POST['numEssay']; //Getting the entered essay questions
+				$timeLimit = $_POST['timeLimit']; //Getting the entered time limit
 				
 				$completeTestName = $chapterName."_".$testName;
 				
